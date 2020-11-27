@@ -203,9 +203,9 @@ public class LongMapImpl<V> implements LongMap<V> {
 
     @Override
     public boolean containsKey(long key) {
-        EntryImpl<Long, V>[] tab;
-        if ((tab = table) != null && size > 0) {
-            for (EntryImpl<Long, V> longVEntry : tab) {
+        EntryImpl<Long, V>[] entries;
+        if ((entries = table) != null && size > 0) {
+            for (EntryImpl<Long, V> longVEntry : entries) {
                 for (EntryImpl<Long, V> entry = longVEntry; entry != null; entry = entry.next) {
                     if (entry.key == key)
 
@@ -219,12 +219,12 @@ public class LongMapImpl<V> implements LongMap<V> {
 
     @Override
     public boolean containsValue(V value) {
-        EntryImpl<Long, V>[] tab;
+        EntryImpl<Long, V>[] entries;
         V tempValue;
-        if ((tab = table) != null && size > 0) {
-            for (EntryImpl<Long, V> longVEntry : tab) {
-                for (EntryImpl<Long, V> e = longVEntry; e != null; e = e.next) {
-                    if ((tempValue = e.value) == value || (value != null && value.equals(tempValue)))
+        if ((entries = table) != null && size > 0) {
+            for (EntryImpl<Long, V> longVEntry : entries) {
+                for (EntryImpl<Long, V> entry = longVEntry; entry != null; entry = entry.next) {
+                    if ((tempValue = entry.value) == value || (value != null && value.equals(tempValue)))
 
                         return true;
                 }
@@ -252,12 +252,12 @@ public class LongMapImpl<V> implements LongMap<V> {
     @Override
     @SuppressWarnings("unchecked")
     public V[] values() {
-        EntryImpl<Long, V>[] tab;
+        EntryImpl<Long, V>[] entries;
         ArrayList<V> values = new ArrayList<>();
-        if ((tab = table) != null && size > 0) {
-            for (EntryImpl<Long, V> longVEntry : tab) {
-                for (EntryImpl<Long, V> e = longVEntry; e != null; e = e.next) {
-                    values.add(e.value);
+        if ((entries = table) != null && size > 0) {
+            for (EntryImpl<Long, V> entry : entries) {
+                for (EntryImpl<Long, V> entryToAdd = entry; entryToAdd != null; entryToAdd = entryToAdd.next) {
+                    values.add(entryToAdd.value);
                 }
             }
         }
